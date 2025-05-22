@@ -7,7 +7,6 @@ export const CopyModel = db.define(
         id_ejemplar: {
             type: DataTypes.INTEGER,
             primaryKey: true,
-            autoIncrement: true,
             allowNull: false
         },
         id_libro: {
@@ -24,6 +23,6 @@ export const CopyModel = db.define(
         }
   },
   {
-    timestamps: true
+    timestamps: false
     }
 )
