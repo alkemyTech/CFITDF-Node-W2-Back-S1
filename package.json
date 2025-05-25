@@ -2,6 +2,7 @@
   "name": "cfitdf-node-w2-back-s1",
   "version": "1.0.0",
   "description": "Repositorio Back Squad 1 | Node | CFI TDF 25",
+  "type": "module",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
