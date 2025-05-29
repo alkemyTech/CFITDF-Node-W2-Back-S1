@@ -55,7 +55,7 @@ RolModel.hasMany(UserModel, {
     as: "rol_usuarios"
     })
 
-export default {
+export { // Se cambia de export default a export 
     BookModel,
     CategoryModel,
     CopyModel,

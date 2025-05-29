@@ -1,6 +1,6 @@
 import { LoanModel, CopyModel, UserModel, BookModel } from "../models/index.js";
-import { Sequelize } from "../config/db-connection.js";
-
+//import { Sequelize } from "../config/db-connection.js";
+import { Sequelize } from "sequelize"; // Cambiado para importar Sequelize desde sequelize (desde el paquete oficial)
 export class LoanService {
   async createLoan(loanData) {
     return await Sequelize.transaction(async (t) => {

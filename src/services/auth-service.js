@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs';
 import CustomError from '../utils/custom-error.js';
-import { UserService } from './user-service.js';
+import { UserService } from './user-services.js';
 
 const userService = new UserService();
 

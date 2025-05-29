@@ -8,7 +8,7 @@ export class CategoryService {
         as: 'categoria_libros',
         attributes: ['id_libro', 'titulo', 'disponible']
       }],
-      order: [['nombre', 'ASC']]
+      order: [['nombre_categoria', 'ASC']] // Ordenar por nombre de categoría. Correccion de la línea original
     });
   }
 

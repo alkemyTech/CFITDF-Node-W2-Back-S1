@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
 // import 'dotenv/config'
+dotenv.config();
 
 
 // Define environment configuration
