@@ -7,7 +7,7 @@ import { RolService } from "../services/rol-services.js";
 
 import { BookControllers } from "./book-controllers.js";
 import { UserControllers } from "./user-controllers.js";
-import { CategoryControllers } from "./category-controllers.js";
+import { CategoryControllers } from "./category-controller.js"; // Hay una S de más
 import { CopyControllers } from "./copy-controllers.js";
 import { LoanControllers } from "./loan-controllers.js";
 import { RolControllers } from "./rol-controllers.js";

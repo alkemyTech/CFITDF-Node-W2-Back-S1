@@ -13,4 +13,16 @@ initMySQLDB()
   .then(() => console.log("Connected to DB!"))
   .catch((error) => console.error(error));
 
+import './models/index.js'; // importa todas las relaciones SIN causar ciclo
+
+//import routes from './routes/index.js'; Importa las rutas de la aplicación
+//app.use('/', routes);
+
+//import errorMiddleware from './middlewares/error-middleware.js'; Importa el middleware de manejo de errores
+//app.use(errorMiddleware); 
+
+
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+
+

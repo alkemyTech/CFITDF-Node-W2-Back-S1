@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
 // import 'dotenv/config'
+dotenv.config();
 
 export default {
   APP_ENV: process.env.APP_ENV,
