@@ -18,6 +18,10 @@ export class UserService {
     }
 
     async create(userData) {
+        // Hashear la contraseña antes de guardar
+        const hashedPassword = await bcrypt.hash(userData.password, 10);
+        userData.password = hashedPassword;
+
         return await UserModel.create(userData);
     }
 
