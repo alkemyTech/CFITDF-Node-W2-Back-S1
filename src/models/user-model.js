@@ -10,12 +10,10 @@ export const UserModel = db.define(
             autoIncrement: true,
             allowNull: false
         },
-
-                id_rol: {
+        id_rol: {
             type: DataTypes.INTEGER,
             allowNull: false
         },
-
         dni: {
             type: DataTypes.INTEGER,
             allowNull: false,
@@ -34,7 +32,6 @@ export const UserModel = db.define(
             allowNull: false,
             unique: true
         },
-
         password: {
             type: DataTypes.STRING(255),
             allowNull: false
