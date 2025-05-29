@@ -9,11 +9,11 @@ PRIMARY KEY	(id_rol)
 
 CREATE TABLE Usuarios (
 id_usuario	int				NOT NULL auto_increment,
+id_rol		int				NOT NULL,
 dni			int				NOT NULL unique,
 nombres		varchar(80)		NOT NULL,
 apellidos	varchar(80)		NOT NULL,
 email		varchar(255)	NOT NULL unique,
-id_rol		int				NOT NULL,
 PRIMARY KEY	(id_usuario),
 INDEX (dni),
 FOREIGN KEY (id_rol) REFERENCES Roles(id_rol)
@@ -27,12 +27,12 @@ PRIMARY KEY	(id_categoria)
 
 CREATE TABLE  Libros (
 id_libro	    int				NOT NULL auto_increment,
+id_categoria	int				NOT NULL,
 titulo		    varchar(255)	NOT NULL,
 isbn	    	varchar(20)		NOT NULL unique,
 editorial   	varchar(255)	NOT NULL,
 autor		    varchar(255)	NOT NULL,
 disponible  	boolean			NOT NULL,
-id_categoria	int				NOT NULL,
 PRIMARY KEY	(id_libro),
 INDEX (titulo),
 INDEX (autor),
@@ -44,7 +44,8 @@ id_ejemplar	int			NOT NULL,
 id_libro	int			NOT NULL,
 numero		int			NOT NULL,
 estado		varchar(25)	NOT NULL,
-PRIMARY KEY (id_ejemplar)
+PRIMARY KEY (id_ejemplar),
+FOREIGN KEY (id_libro) REFERENCES Libros(id_libro)
 );
 
 CREATE TABLE Prestamos (

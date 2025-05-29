@@ -1,9 +1,11 @@
 import { Sequelize } from "sequelize";
+import config from "./index.js";
 
-export const db = new Sequelize("test", "root", "", {
-  host: "localhost",
+export const db = new Sequelize(config.DB_NAME, config.DB_USER, config.DB_PASSWORD, {
+  host: config.DB_HOST,
+  port: config.DB_PORT,
   dialect: "mysql",
-  //   logging: false,
+  logging: false,
 });
 
 export const initMySQLDB = async () => {
