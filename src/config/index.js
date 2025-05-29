@@ -1,6 +1,8 @@
 import dotenv from "dotenv";
 // import 'dotenv/config'
 
+
+// Define environment configuration
 export default {
   APP_ENV: process.env.APP_ENV,
   PORT: process.env.SERVER_PORT || 3000,
