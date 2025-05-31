@@ -13,8 +13,12 @@ export class UserService {
         return await UserModel.findOne({ where: { dni } });
     }
 
+    // Método actualizado
     async getByEmail(email) {
-        return await UserModel.findOne({ where: { email } });
+    return await UserModel.findOne({
+    where: { email },
+    attributes: ['id_usuario', 'email', 'password', 'id_rol']
+    });
     }
 
     async create(userData) {
