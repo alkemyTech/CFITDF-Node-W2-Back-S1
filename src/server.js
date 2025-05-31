@@ -1,5 +1,6 @@
 import express from "express";
 import config from "./config/index.js";
+import cors from "cors";
 
 import { initMySQLDB } from "./config/db-connection.js";
 
@@ -8,6 +9,8 @@ const PORT = config.PORT;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use(cors()); 
 
 initMySQLDB()
   .then(() => console.log("Connected to DB!"))
