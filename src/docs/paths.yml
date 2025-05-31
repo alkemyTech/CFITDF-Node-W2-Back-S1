@@ -1,0 +1,121 @@
+paths:
+  /books:
+    post:
+      tags:
+      - Books
+      summary: Crear un nuevo libro
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/parameters/schemas/BodyPost"
+        required: true
+      responses:
+        201:
+          description: Libro creado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Books/Book"
+        400:
+          description: Error al crear el libro
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Books/ErrorPost"   
+  #   get:
+  #     tags:
+  #     - Books
+  #     summary: Obtener todos los libros
+  #     responses:
+  #       200:
+  #         description: Lista de libros obtenida exitosamente
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schema/Books/GetAllBooks"
+  #       404:
+  #         description: No se encontraron libros
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schema/Books/NotFound"     
+  # /books/{id}:
+  #   get:
+  #     tags:
+  #     - Books
+  #     summary: Obtener un libro por ID
+  #     parameters:
+  #       - name: id
+  #         in: path
+  #         required: true
+  #         description: ID del libro a obtener
+  #         schema:
+  #           type: integer
+  #     responses:
+  #       200:
+  #         description: Recurso obtenido exitosamente
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schema/Books/Book"
+  #       404:
+  #         description: Error al obtener el Recurso por ID
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schema/Books/ErrorGetById"               
+  #   put:
+  #     tags:
+  #     - Books
+  #     summary: Actualizar un libro por ID
+  #     parameters:
+  #       - name: id
+  #         in: path
+  #         required: true
+  #         description: ID del libro a actualizar
+  #         schema:
+  #           type: integer
+  #     requestBody:
+  #       content:
+  #         application/json:
+  #           schema:
+  #             $ref: "#/components/parameters/schemas/BodyPost"
+  #       required: true
+  #     responses:
+  #       200:
+  #         description: Libro actualizado exitosamente
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schema/Books/Book"
+  #       404:
+  #         description: Error al actualizar el libro por ID
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schema/Books/ErrorGetById"
+  #   delete:  
+  #     tags:
+  #     - Books
+  #     summary: Eliminar un libro por ID
+  #     parameters:
+  #       - name: id
+  #         in: path
+  #         required: true
+  #         description: ID del libro a eliminar
+  #         schema:
+  #           type: integer
+  #     responses:
+  #       200:
+  #         description: Libro eliminado exitosamente
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schema/Books/Book"
+  #       404:
+  #         description: Error al eliminar el libro por ID
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schema/Books/ErrorGetById"                 
