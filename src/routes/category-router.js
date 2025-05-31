@@ -1,14 +1,37 @@
 import express from 'express';
 import { categoryControllers } from '../controllers/index.js';
+import { checkTokenUser } from '../middlewares/check-user.js';
+import authGuard from '../middlewares/auth-guard.js';
 
 const router = express.Router();
 
+// Rutas protegidas (solo administradores)
+router.post(
+  '/',
+  checkTokenUser,
+  authGuard(['admin']),
+  categoryControllers.create
+);
 
+router.put(
+  '/:id',
+  checkTokenUser,
+  authGuard(['admin']),
+  categoryControllers.update
+);
+
+router.delete(
+  '/:id',
+  checkTokenUser,
+  authGuard(['admin']),
+  categoryControllers.delete
+);
+
+// Rutas públicas
 router.get('/', categoryControllers.getAll);
 router.get('/:id', categoryControllers.getById);
-//router.get('/:id/books', categoryControllers.getCategoryBooks); Aun no se creo el controlador para obtener los libros de una categoria
-router.post('/', categoryControllers.create);
-router.put('/:id', categoryControllers.update);
-router.delete('/:id', categoryControllers.delete);
+
+// RUTA SIN USO. Debido a que aun no se creó el controlador correspondiente.
+// router.get('/:id/books', categoryControllers.getCategoryBooks);
 
 export default router;
