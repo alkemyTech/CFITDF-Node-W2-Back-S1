@@ -1,6 +1,7 @@
 // Para probar books empezando por GET
-import chai from 'chai';
+import * as chai from 'chai';
 import chaiHttp from 'chai-http';
+
 import app from '../src/server.js';
 
 chai.use(chaiHttp);

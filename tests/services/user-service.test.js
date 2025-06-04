@@ -1,5 +1,7 @@
 // Para probar metodos del user services. Test para getByEmail 
-import { expect } from 'chai';
+//import { expect } from 'chai';
+import * as chai from 'chai';
+const expect = chai.expect;
 import { UserService } from '../../src/services/user-services.js';
 
 const userService = new UserService();

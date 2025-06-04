@@ -1,5 +1,5 @@
 // Para probar auth-login
-import chai from 'chai';
+import * as chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../src/server.js'; 
 
