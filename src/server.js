@@ -27,3 +27,5 @@ app.use("/", routes);
 app.use(errorHandler);
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+export default app; // Para pruebas
