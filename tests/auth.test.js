@@ -1,14 +1,11 @@
 // Para probar auth-login
-import * as chai from 'chai';
-import chaiHttp from 'chai-http';
-import app from '../src/server.js'; 
-
-chai.use(chaiHttp);
-const expect = chai.expect;
+import request from 'supertest';
+import { expect } from 'chai';
+import app from '../src/server.js';
 
 describe('Auth - Login', () => {
   it('debería hacer login exitoso con credenciales válidas', async () => {
-    const res = await chai.request(app)
+    const res = await request(app) // <--- corregido
       .post('/auth/login')
       .send({
         email: 'emelimedina@gmail.com',
@@ -21,7 +18,7 @@ describe('Auth - Login', () => {
   });
 
   it('debería fallar con credenciales inválidas', async () => {
-    const res = await chai.request(app)
+    const res = await request(app) // <--- corregido
       .post('/auth/login')
       .send({
         email: 'emelimedina@gmail.com',
