@@ -1,24 +1,32 @@
 // Middleware para validar parámetros de ruta y body en las rutas de copias
 // Se usa para asegurar que los datos recibidos sean del tipo y formato esperado antes de llegar al controlador
+import { body, param, validationResult } from 'express-validator'; // Importamos las funciones necesarias
 
-export const validateCopyData = (req, res, next) => {
-  const { id, bookId } = req.params;
-  const { estado } = req.body;
+export const validateCopyData = [
+  // Validar parámetros de ruta
+  // param('id') verifica que el parámetro 'id' en la ruta exista
+  // .optional() lo hace opcional, útil si no todas las rutas de copias tienen 'id'
+  // .isInt() asegura que, si existe, sea un entero
+  // .withMessage() personaliza el mensaje de error
+  param('id').optional().isInt().withMessage('El id debe ser numérico'),
+  param('bookId').optional().isInt().withMessage('El bookId debe ser numérico'),
 
-  // Validar que id y bookId sean numéricos si existen
-  // Esto previene errores en la base de datos y asegura que los controladores reciban datos válidos
-  if (id && !/^[0-9]+$/.test(id)) {
-    return res.status(400).json({ message: "El id debe ser numérico" });
+  // Validar campo de body
+  // body('estado') verifica que el campo 'estado' en el body exista
+  // .optional() lo hace opcional
+  // .isString() asegura que, si existe, sea un string
+  // .trim() elimina espacios al inicio y al final
+  // .notEmpty() asegura que no esté vacío después de trim
+  body('estado').optional().isString().trim().notEmpty().withMessage('El estado debe ser un string y no puede estar vacío'),
+
+  // Middleware para manejar los resultados de la validación
+  // Este es el "manejador" que se ejecuta después de las validaciones anteriores
+  (req, res, next) => {
+    const errors = validationResult(req); // Obtenemos los errores de validación
+    if (!errors.isEmpty()) {
+      // Si hay errores, respondemos con un 400 y los errores formateados
+      return res.status(400).json({ errors: errors.array() });
+    }
+    next(); // Si no hay errores, continuamos al siguiente middleware o controlador
   }
-  if (bookId && !/^[0-9]+$/.test(bookId)) {
-    return res.status(400).json({ message: "El bookId debe ser numérico" });
-  }
-
-  // Validar campo de body (ejemplo: estado debe ser string si existe)
-  // Esto ayuda a evitar errores de validación en la lógica de negocio
-  if (estado && typeof estado !== "string") {
-    return res.status(400).json({ message: "El estado debe ser un string" });
-  }
-
-  next();
-};
+];
