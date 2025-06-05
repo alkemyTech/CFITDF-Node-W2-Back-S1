@@ -1,33 +1,46 @@
 // Validación de usuarios.
+import { body, validationResult } from 'express-validator';
 
-export const validateUserData = (req, res, next) => {
-  const { dni, nombres, apellidos, email, id_rol } = req.body;
+export const validateUserData = [
+  // Validar DNI: debe ser un entero y tener al menos 7 dígitos
+  body('dni')
+    .isInt({ min: 1000000 }).withMessage('El DNI debe ser un número entero de al menos 7 dígitos.')
+    .notEmpty().withMessage('El DNI es obligatorio.'),
 
-  if (!dni || !nombres || !apellidos || !email || !id_rol) {
-    return res.status(400).json({ message: "Todos los campos son obligatorios." });
+  // Validar nombres: debe ser un string no vacío
+  body('nombres')
+    .isString().withMessage('El nombre debe ser un texto.')
+    .trim()
+    .notEmpty().withMessage('El nombre es obligatorio.'),
+
+  // Validar apellidos: debe ser un string no vacío
+  body('apellidos')
+    .isString().withMessage('El apellido debe ser un texto.')
+    .trim()
+    .notEmpty().withMessage('El apellido es obligatorio.'),
+
+  // Validar email: debe ser un email válido
+  body('email')
+    .isEmail().withMessage('El email no tiene un formato válido.')
+    .normalizeEmail() // Normaliza el email (ej. a minúsculas)
+    .notEmpty().withMessage('El email es obligatorio.'),
+
+  // Validar id_rol: debe ser un entero
+  body('id_rol')
+    .isInt().withMessage('El ID del rol debe ser un número entero.')
+    .notEmpty().withMessage('El ID del rol es obligatorio.'),
+  
+  // Validar password (opcional, solo en creación o si se envía)
+  body('password')
+    .optional() // Solo valida si se envía
+    .isLength({ min: 8 }).withMessage('La contraseña debe tener al menos 8 caracteres.'),
+
+  // Middleware para manejar los resultados de la validación
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    next();
   }
-
-  if (!Number.isInteger(dni) || dni < 1000000) {
-    return res.status(400).json({ message: "El DNI debe ser un número válido." });
-  }
-
-  if (typeof nombres !== "string" || nombres.trim() === "") {
-    return res.status(400).json({ message: "El nombre debe ser un texto válido." });
-  }
-
-  if (typeof apellidos !== "string" || apellidos.trim() === "") {
-    return res.status(400).json({ message: "El apellido debe ser un texto válido." });
-  }
-
-  const emailRegex = /^[\w.-]+@[\w.-]+\.\w+$/;
-
-  if (!emailRegex.test(email)) {
-    return res.status(400).json({ message: "El email no es válido." });
-  }
-
-  if (!Number.isInteger(id_rol)) {
-    return res.status(400).json({ message: "El id del rol debe ser un número válido." });
-  }
-
-  next();
-};
+];
