@@ -1,5 +1,4 @@
 import express from "express";
-import config from "./config/index.js";
 import cors from "cors";
 // import models from './models/index.js';
 import errorHandler from "./middlewares/error-handler.js";
@@ -11,7 +10,6 @@ import { info } from "./docs/info.js";
 const specs = swaggerJSDoc(info);
 
 const app = express();
-const PORT = config.PORT;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -26,6 +24,4 @@ app.use("/docs", swaggerUI.serve, swaggerUI.setup(specs));
 app.use("/", routes);
 app.use(errorHandler);
 
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-
-export default app; // Para pruebas
+export default app;

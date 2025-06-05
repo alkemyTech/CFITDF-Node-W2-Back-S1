@@ -5,11 +5,12 @@ USE Alke_biblioteca;
 -- Doss roles: Admin y user
 INSERT INTO Roles (nombre_rol) VALUES ('administrador'),('cliente');
 
-INSERT INTO Usuarios (dni, nombres, apellidos, email, id_rol) VALUES 
-(36301921, 'Pablo', 'Jusim', 'pablo@gmail.com', 2),
-(37845112, 'Cesar', 'Segovia', 'cesar@gmail.com', 2),
-(35250620, 'Juan Pablo', 'Schiemann', 'juanpablo@gmail.com', 1),
-(40920118, 'Emeli', 'Medina', 'emelimedina@gmail.com', 1);
+INSERT INTO Usuarios (dni, nombres, apellidos, email, id_rol, `password`, createdAt, updatedAt) VALUES 
+(36301921, 'Pablo', 'Jusim', 'pablo@gmail.com', 2, '$2b$10$He3Bw4pMQo81kd8ygZwSyu.fHDmd19MatDBV2orOySyqgBZG.qfKa', NOW(), NOW()),
+(37845112, 'Cesar', 'Segovia', 'cesar@gmail.com', 2, '$2b$10$He3Bw4pMQo81kd8ygZwSyu.fHDmd19MatDBV2orOySyqgBZG.qfKa', NOW(), NOW()),
+(35250620, 'Juan Pablo', 'Schiemann', 'juanpablo@gmail.com', 1, '$2b$10$He3Bw4pMQo81kd8ygZwSyu.fHDmd19MatDBV2orOySyqgBZG.qfKa', NOW(), NOW()),
+(40920118, 'Emeli', 'Medina', 'emelimedina@gmail.com', 1, '$2b$10$He3Bw4pMQo81kd8ygZwSyu.fHDmd19MatDBV2orOySyqgBZG.qfKa',NOW(), NOW());
+
 
 -- Caterogias a modo de ejemplo ámbito tech.
 INSERT INTO Categorias (nombre_categoria) VALUES

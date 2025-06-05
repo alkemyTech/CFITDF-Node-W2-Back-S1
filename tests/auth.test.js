@@ -8,8 +8,8 @@ describe('Auth - Login', () => {
     const res = await request(app) // <--- corregido
       .post('/auth/login')
       .send({
-        email: 'emelimedina@gmail.com',
-        password: '123456'
+        email: 'juanpablo@gmail.com',
+        password: '1234'
       });
 
     expect(res.status).to.equal(200);

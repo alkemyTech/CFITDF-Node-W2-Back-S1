@@ -4,7 +4,7 @@ import { DataTypes } from "sequelize";
 export const RolModel = db.define(
     "Roles",
     {
-        id_rolr: {
+        id_rol: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             allowNull: false
