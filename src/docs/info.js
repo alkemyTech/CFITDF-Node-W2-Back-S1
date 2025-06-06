@@ -10,7 +10,7 @@ export const info = {
     },
     servers: [
       {
-        url: `http://0.0.0.:${config.PORT}`,
+        url: `http://localhost:${config.API_PORT}`,
       },
     ],
   },

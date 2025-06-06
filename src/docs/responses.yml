@@ -1,0 +1,59 @@
+components:
+  schema:
+    Books:
+      Book:
+        type: object
+        properties:
+          id:
+            type: integer
+            description: ID del libro
+            example: 1
+          titulo:
+            type: string
+            description: Título del libro
+            example: The Great Gatsby
+          isbn:
+            type: string
+            description: International Standard Book Number
+            example: 9788497936606
+          editorial:
+            type: string
+            description: Empresa que publica/distribuye libros
+            example: Anagrama
+          autor:
+            type: string
+            description: Autor de la obra
+            example: F. Scott Fitzgerald
+          disponible:
+            type: boolean
+            description: Identifica si esta disponible para prestamos
+            example: true
+          id_categoria:
+            type: int
+            description: referencia unica a una categoria
+            example: 2                    
+      GetAllBooks:
+        type: array
+        items:
+          $ref: "#/components/schema/Books/Book"
+      NotFound:
+        type: object
+        properties:
+          message:
+            type: string
+            description: Mensaje de error
+            example: El resurso no se encontró.
+      ErrorGetById:
+        type: object
+        properties:
+          message:
+            type: string
+            description: Mensaje de error
+            example: Error al obtener el recurso con ID x.
+      ErrorPost:
+        type: object
+        properties:
+          message:
+            type: string
+            description: Mensaje de error
+            example: Error al crear el recurso.

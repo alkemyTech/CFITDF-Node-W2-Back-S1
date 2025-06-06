@@ -1,0 +1,37 @@
+components: 
+  parameters:
+    schemas:
+      BodyPost: 
+        type: object
+        required:
+          - titulo          
+          - isbn          
+          - editorial          
+          - autor          
+          - disponible          
+          - id_categoria
+        properties:
+          titulo:
+            type: string
+            description: Título del libro
+            example: The Great Gatsby
+          isbn:
+            type: string
+            description: International Standard Book Number
+            example: 9788497936606
+          editorial:
+            type: string
+            description: Empresa que publica/distribuye libros
+            example: Anagrama
+          autor:
+            type: string
+            description: Autor de la obra
+            example: F. Scott Fitzgerald
+          disponible:
+            type: boolean
+            description: Identifica si esta disponible para prestamos
+            example: true
+          id_categoria:
+            type: int
+            description: referencia unica a una categoria
+            example: 1                  
