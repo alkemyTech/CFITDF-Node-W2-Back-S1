@@ -1,6 +1,5 @@
 import express from "express";
 import cors from "cors";
-// import models from './models/index.js';
 import errorHandler from "./middlewares/error-handler.js";
 import routes from "./routes/index.js";
 import swaggerJSDoc from "swagger-jsdoc";
