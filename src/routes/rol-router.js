@@ -5,7 +5,7 @@ import authGuard from '../middlewares/auth-guard.js';
 
 const router = express.Router();
 
-// Rutas protegidas solo para admsinistradores.
+// Rutas protegidas solo para administradores.
 router.get(
   '/',
   checkTokenUser,
