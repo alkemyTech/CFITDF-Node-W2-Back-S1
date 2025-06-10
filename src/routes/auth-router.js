@@ -13,6 +13,7 @@ const authRouter = express.Router();
  * Handles user login.
  * 
  * @route POST /login
+ * @description Authenticates a user and returns a token.
  */
 authRouter.post('/login', loginController);
 
