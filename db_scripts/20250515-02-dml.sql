@@ -9,6 +9,7 @@ INSERT INTO Usuarios (dni, nombres, apellidos, email, id_rol, `password`, create
 (36301921, 'Pablo', 'Jusim', 'pablo@gmail.com', 2, '$2b$10$He3Bw4pMQo81kd8ygZwSyu.fHDmd19MatDBV2orOySyqgBZG.qfKa', NOW(), NOW()),
 (37845112, 'Cesar', 'Segovia', 'cesar@gmail.com', 2, '$2b$10$He3Bw4pMQo81kd8ygZwSyu.fHDmd19MatDBV2orOySyqgBZG.qfKa', NOW(), NOW()),
 (35250620, 'Juan Pablo', 'Schiemann', 'juanpablo@gmail.com', 1, '$2b$10$He3Bw4pMQo81kd8ygZwSyu.fHDmd19MatDBV2orOySyqgBZG.qfKa', NOW(), NOW()),
+(37845000, 'Ever', 'Loza', 'ever@gmail.com', 1, '$2b$10$He3Bw4pMQo81kd8ygZwSyu.fHDmd19MatDBV2orOySyqgBZG.qfKa', NOW(), NOW()),
 (40920118, 'Emeli', 'Medina', 'emelimedina@gmail.com', 1, '$2b$10$He3Bw4pMQo81kd8ygZwSyu.fHDmd19MatDBV2orOySyqgBZG.qfKa',NOW(), NOW());
 
 

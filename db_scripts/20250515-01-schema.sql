@@ -8,12 +8,22 @@ PRIMARY KEY	(id_rol)
 );
 
 CREATE TABLE Usuarios (
-id_usuario	int				NOT NULL auto_increment,
-id_rol		int				NOT NULL,
-dni			int				NOT NULL unique,
-nombres		varchar(80)		NOT NULL,
-apellidos	varchar(80)		NOT NULL,
-email		varchar(255)	NOT NULL unique,
+CREATE TABLE Usuarios (
+  `id_usuario` int NOT NULL AUTO_INCREMENT,
+  `id_rol` int NOT NULL,
+  `dni` int NOT NULL,
+  `nombres` varchar(80) NOT NULL,
+  `apellidos` varchar(80) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  `deletedAt` datetime DEFAULT NULL,
+PRIMARY KEY	(id_usuario),
+INDEX (dni),
+FOREIGN KEY (id_rol) REFERENCES Roles(id_rol)
+);
+
 PRIMARY KEY	(id_usuario),
 INDEX (dni),
 FOREIGN KEY (id_rol) REFERENCES Roles(id_rol)

@@ -31,7 +31,7 @@ components:
           id_categoria:
             type: int
             description: referencia unica a una categoria
-            example: 2                    
+            example: 2
       GetAllBooks:
         type: array
         items:
@@ -57,3 +57,255 @@ components:
             type: string
             description: Mensaje de error
             example: Error al crear el recurso.
+    Auth:
+      Login:
+        type: object
+        properties:
+          message:
+            type: string
+            description: email registrado
+            example: Login exitoso
+          user:
+            type: object
+            properties:
+              id_usuario:
+                type: integer
+                description: identificador del usuario
+                example: 1
+              email:
+                type: string
+                description: email registrado
+                example: some@alkebiblioteca.com
+              id_rol:
+                type: integer
+                description: identificador del rol del usuario
+                example: 1
+      ErrorPost:
+        type: object
+        properties:
+          message:
+            type: string
+            description: Mensaje de error
+            example: Authentication failed
+    Categories:
+      Category:
+        type: object
+        properties:
+          id_categoria:
+            type: integer
+            description: ID de la categoria
+            example: 1
+          nombre_categoria:
+            type: string
+            description: Nombre de la categoria
+            example: Historia
+      GetAll:
+        type: array
+        items:
+          $ref: "#/components/schema/Categories/Category"
+      NotFound:
+        type: object
+        properties:
+          message:
+            type: string
+            description: Mensaje de error
+            example: El resurso no se encontró.
+      ErrorGetById:
+        type: object
+        properties:
+          message:
+            type: string
+            description: Mensaje de error
+            example: Error al obtener el recurso con ID x.
+      ErrorPost:
+        type: object
+        properties:
+          message:
+            type: string
+            description: Mensaje de error
+            example: Error al crear el recurso.            
+    Roles:
+      Role:
+        type: object
+        properties:
+          id_rol:
+            type: integer
+            description: ID del rol
+            example: 1
+          nombre_rol:
+            type: string
+            description: Nombre del rol
+            example: Admin
+      GetAll:
+        type: array
+        items:
+          $ref: "#/components/schema/Roles/Role"
+      NotFound:
+        type: object
+        properties:
+          message:
+            type: string
+            description: Mensaje de error
+            example: El resurso no se encontró.
+      ErrorGetById:
+        type: object
+        properties:
+          message:
+            type: string
+            description: Mensaje de error
+            example: Error al obtener el recurso con ID x.
+      ErrorPost:
+        type: object
+        properties:
+          message:
+            type: string
+            description: Mensaje de error
+            example: Error al crear el recurso.            
+    Copies:
+      Copy:
+        type: object
+        properties:
+          id_ejemplar:
+            type: integer
+            description: ID del ejemplar
+            example: 1		
+          id_libro:
+            type: integer
+            description: ID del libro al que pertenece el ejemplar
+            example: 1
+          numero:
+            type: integer
+            description: El numero del ejemplar que lo identifica
+            example: 3
+          estado:
+            type: string
+            description: Estado del ejemplar
+            example: Disponible
+      GetAll:
+        type: array
+        items:
+          $ref: "#/components/schema/Copies/Copy"
+      NotFound:
+        type: object
+        properties:
+          message:
+            type: string
+            description: Mensaje de error
+            example: El resurso no se encontró.
+      ErrorGetById:
+        type: object
+        properties:
+          message:
+            type: string
+            description: Mensaje de error
+            example: Error al obtener el recurso con ID x.
+      ErrorPost:
+        type: object
+        properties:
+          message:
+            type: string
+            description: Mensaje de error
+            example: Error al crear el recurso.            
+    Users:
+      User:
+        type: object
+        properties:
+          id_usuario:
+            type: integer
+            description: ID del usuario
+            example: 1	
+          id_rol:
+            type: integer
+            description: ID del rol asignado
+            example: 1
+          dni:
+            type: integer
+            description: Documento nacional de identidad
+            example: 1300208
+          nombres:
+            type: string
+            description: Nombre(s) del usuario
+            example: Augusto 
+          apellidos:
+            type: string
+            description: Apellido(s) del usuario
+            example: Lasserre 
+          email:
+            type: string
+            description: Direccion de correo electronico
+            example: alasserre@alke.com 	
+      GetAll:
+        type: array
+        items:
+          $ref: "#/components/schema/Users/User"
+      NotFound:
+        type: object
+        properties:
+          message:
+            type: string
+            description: Mensaje de error
+            example: El resurso no se encontró.
+      ErrorGetById:
+        type: object
+        properties:
+          message:
+            type: string
+            description: Mensaje de error
+            example: Error al obtener el recurso con ID x.
+      ErrorPost:
+        type: object
+        properties:
+          message:
+            type: string
+            description: Mensaje de error
+            example: Error al crear el recurso.            
+    Loans:
+      Loan:
+        type: object
+        properties:
+          id_prestamo:
+            type: integer
+            description: ID del prestamo
+            example: 1	
+          id_usuario:
+            type: integer
+            description: ID del usuario
+            example: 3
+          id_ejemplar:
+            type: integer
+            description: ID del ejemplar del libro prestado
+            example: 15
+          creacion:
+            type: string
+            description: Fecha de creacion del prestamo
+            example: 20250601 
+          devolucion:
+            type: string
+            description: Fecha de devolucion del prestamo
+            example: 20250625 
+      GetAll:
+        type: array
+        items:
+          $ref: "#/components/schema/Loans/Loan"
+      NotFound:
+        type: object
+        properties:
+          message:
+            type: string
+            description: Mensaje de error
+            example: El resurso no se encontró.
+      ErrorGetById:
+        type: object
+        properties:
+          message:
+            type: string
+            description: Mensaje de error
+            example: Error al obtener el recurso con ID x.
+      ErrorPost:
+        type: object
+        properties:
+          message:
+            type: string
+            description: Mensaje de error
+            example: Error al crear el recurso.            
+                        

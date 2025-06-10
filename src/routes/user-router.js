@@ -1,3 +1,9 @@
+/**
+ * User Router
+ *
+ * Handles user-related routes.
+ */
+
 import express from "express";
 import { userControllers } from "../controllers/index.js";
 import { checkTokenUser } from "../middlewares/check-user.js";
@@ -6,7 +12,17 @@ import { validateUserData } from "../middlewares/validate-user-data.js";
 
 const router = express.Router();
 
-// Rutas protegidas para los administradores.
+/**
+ * Protected routes for administrators (POST, PUT, DELETE)
+ */
+
+/**
+ * Creates a new user.
+ *
+ * @route POST /
+ * @description Creates a new user and returns its ID.
+ * @access admin
+ */
 router.post(
   "/",
   checkTokenUser,
@@ -15,6 +31,13 @@ router.post(
   userControllers.create
 );
 
+/**
+ * Updates an existing user.
+ *
+ * @route PUT /:id
+ * @description Updates an existing user and returns its updated data.
+ * @access admin
+ */
 router.put(
   "/:id",
   checkTokenUser,
@@ -29,6 +52,20 @@ router.get('/me', checkTokenUser, (req, res) => {
   res.json(req.user);
 });
 
+// Ruta para obtener el usuario autenticado
+router.get("/me", checkTokenUser, (req, res) => {
+  console.log("req.user:", req.user);
+  res.json(req.user);
+});
+
+/**
+ * Deletes a user.
+ *
+ * @route DELETE /:id
+ * @description Deletes a user and returns a success message.
+ * @access admin
+ */
+
 router.delete(
   "/:id",
   checkTokenUser,
@@ -36,10 +73,40 @@ router.delete(
   userControllers.delete
 );
 
-// Rutas públicas
+/**
+ * Public routes (GET)
+ */
+
+/**
+ * Retrieves all users.
+ *
+ * @route GET /
+ * @description Retrieves a list of all users.
+ */
 router.get("/", userControllers.getAll);
+
+/**
+ * Retrieves a user by DNI.
+ *
+ * @route GET /dni/:dni
+ * @description Retrieves a user by DNI.
+ */
 router.get("/dni/:dni", userControllers.getByDni);
+
+/**
+ * Retrieves users by role.
+ *
+ * @route GET /role/:roleId
+ * @description Retrieves a list of users by role ID.
+ */
 router.get("/role/:roleId", userControllers.getByRole);
-router.get("/:id", userControllers.getById); 
+
+/**
+ * Retrieves a user by ID.
+ *
+ * @route GET /:id
+ * @description Retrieves a user by ID.
+ */
+router.get("/:id", userControllers.getById);
 
 export default router;
