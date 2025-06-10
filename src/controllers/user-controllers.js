@@ -84,6 +84,13 @@ export class UserControllers {
                 }
             }
 
+            if (req.body.dni) {
+            const existeDni = await this.service.getByDni(Number(req.body.dni));
+            if (existeDni && Number(existeDni.id_usuario) !== Number(user.id_usuario)) {
+                throw new CustomError("El DNI ya está registrado", 400);
+            }
+            }
+
             const updatedUser = await this.service.update(req.params.id, req.body);
             res.status(200).json({
                 message: successMessages.UPDATED,

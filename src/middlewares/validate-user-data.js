@@ -2,37 +2,37 @@
 import { body, validationResult } from 'express-validator';
 
 export const validateUserData = [
-  // Validar DNI: debe ser un entero y tener al menos 7 dígitos
-  body('dni')
-    .isInt({ min: 1000000 }).withMessage('El DNI debe ser un número entero de al menos 7 dígitos.')
-    .notEmpty().withMessage('El DNI es obligatorio.'),
-
-  // Validar nombres: debe ser un string no vacío
+  // Middleware de validación para actualizar usuario
+  // Nombres: opcional, pero si viene debe ser string y no vacío
   body('nombres')
+    .optional()
     .isString().withMessage('El nombre debe ser un texto.')
     .trim()
     .notEmpty().withMessage('El nombre es obligatorio.'),
 
-  // Validar apellidos: debe ser un string no vacío
+  // Apellidos: opcional, pero si viene debe ser string y no vacío
   body('apellidos')
+    .optional()
     .isString().withMessage('El apellido debe ser un texto.')
     .trim()
     .notEmpty().withMessage('El apellido es obligatorio.'),
 
-  // Validar email: debe ser un email válido
+  // Email: opcional, pero si viene debe ser email válido
   body('email')
+    .optional()
     .isEmail().withMessage('El email no tiene un formato válido.')
-    .normalizeEmail() // Normaliza el email (ej. a minúsculas)
+    .normalizeEmail()
     .notEmpty().withMessage('El email es obligatorio.'),
 
-  // Validar id_rol: debe ser un entero
+  // id_rol: opcional, pero si viene debe ser entero
   body('id_rol')
+    .optional()
     .isInt().withMessage('El ID del rol debe ser un número entero.')
     .notEmpty().withMessage('El ID del rol es obligatorio.'),
-  
-  // Validar password (opcional, solo en creación o si se envía)
+
+  // Password: opcional, pero si viene debe tener mínimo 8 caracteres
   body('password')
-    .optional() // Solo valida si se envía
+    .optional()
     .isLength({ min: 8 }).withMessage('La contraseña debe tener al menos 8 caracteres.'),
 
   // Middleware para manejar los resultados de la validación

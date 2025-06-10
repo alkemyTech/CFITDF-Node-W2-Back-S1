@@ -31,14 +31,19 @@ export class UserService {
     }
 
     async update(id, userData) {
-        const [updated] = await UserModel.update(userData, {
+        try {
+            const [updated] = await UserModel.update(userData, {
             where: { id_usuario: id }
-        });
-        if (updated) {
+            });
+            if (updated) {
             return await this.getById(id);
+            }
+            return null;
+        } catch (error) {
+            console.error("ERROR SEQUELIZE UPDATE:", error);
+            throw error;
         }
-        return null;
-    }
+        }
 
     async delete(id) {
         const deleted = await UserModel.destroy({
