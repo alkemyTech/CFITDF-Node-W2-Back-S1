@@ -13,7 +13,7 @@ export class CopyService {
         {
           model: LoanModel,
           as: 'ejemplar_prestamos',
-          where: { fecha_devolucion: null },
+          where: { devolucion: null },
           required: false
         }
       ]

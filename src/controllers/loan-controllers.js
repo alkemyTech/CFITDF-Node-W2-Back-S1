@@ -45,15 +45,18 @@ export class LoanControllers {
       const loans = await this.service.getActiveLoans();
       res.status(200).json(loans);
     } catch (error) {
+      console.error('Error en getActiveLoans:', error);
       next(new CustomError(errorMessages.INTERNAL_ERROR, 500));
     }
   }
+  
 
   getUserLoans = async (req, res, next) => {
     try {
       const loans = await this.service.getUserLoans(req.params.userId);
       res.status(200).json(loans);
     } catch (error) {
+      console.error('Error en getUserLoans:', error);
       next(new CustomError(errorMessages.INTERNAL_ERROR, 500));
     }
   }
@@ -63,7 +66,8 @@ export class LoanControllers {
       const loans = await this.service.getOverdueLoans();
       res.status(200).json(loans);
     } catch (error) {
-      next(new CustomError(errorMessages.INTERNAL_ERROR, 500));
+        console.error('Error en getActiveLoans:', error);
+        next(new CustomError(errorMessages.INTERNAL_ERROR, 500));
+      }
     }
   }
-}

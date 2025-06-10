@@ -23,4 +23,9 @@ app.use("/docs", swaggerUI.serve, swaggerUI.setup(specs));
 app.use("/", routes);
 app.use(errorHandler);
 
+app.use((err, req, res, next) => {
+  console.error('Error global:', err);
+  res.status(err.status || 500).json({ message: err.message || 'Internal Server Error' });
+});
+
 export default app;

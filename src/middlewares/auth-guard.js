@@ -9,11 +9,11 @@ const authGuard = (allowedRoles = []) => {
       return next(new CustomError('No autenticado', 401));
     }
 
-    if (!allowedRoles.includes(user.rol)) {
+    if (!allowedRoles.includes(user.id_rol)) {
       return next(new CustomError('No autorizado', 403));
     }
 
-    next(); 
+    next();
   };
 };
 

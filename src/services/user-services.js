@@ -1,4 +1,5 @@
 import { UserModel } from "../models/user-model.js";
+import bcrypt from 'bcrypt';
 
 export class UserService {
     async getAll() {

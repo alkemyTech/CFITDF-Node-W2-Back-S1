@@ -9,7 +9,7 @@ export class LoanService {
         include: [{
           model: LoanModel,
           as: 'ejemplar_prestamos',
-          where: { fecha_devolucion: null },
+          where: { devolucion: null },
           required: false
         }],
         transaction: t
@@ -32,11 +32,11 @@ export class LoanService {
       if (!loan) {
         throw new Error('Préstamo no encontrado');
       }
-      if (loan.fecha_devolucion) {
+      if (loan.devolucion) {
         throw new Error('El préstamo ya fue devuelto');
       }
 
-      loan.fecha_devolucion = new Date();
+      loan.devolucion = new Date();
       await loan.save({ transaction: t });
       
       return loan;
@@ -45,7 +45,7 @@ export class LoanService {
 
   async getActiveLoans() {
     return await LoanModel.findAll({
-      where: { fecha_devolucion: null },
+      where: { devolucion: null },
       include: [
         { 
           model: UserModel, 
@@ -62,7 +62,7 @@ export class LoanService {
           }]
         }
       ],
-      order: [['fecha_prestamo', 'ASC']]
+      order: [['creacion', 'ASC']]
     });
   }
 
@@ -80,7 +80,7 @@ export class LoanService {
           }]
         }
       ],
-      order: [['fecha_prestamo', 'DESC']]
+      order: [['creacion', 'DESC']]
     });
   }
 
@@ -90,8 +90,8 @@ export class LoanService {
 
     return await LoanModel.findAll({
       where: {
-        fecha_prestamo: { [Sequelize.Op.lt]: dosSemanas },
-        fecha_devolucion: null
+        creacion: { [Sequelize.Op.lt]: dosSemanas },
+        devolucion: null
       },
       include: [
         { 

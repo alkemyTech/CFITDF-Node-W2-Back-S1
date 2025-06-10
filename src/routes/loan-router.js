@@ -25,7 +25,7 @@ const router = express.Router();
 router.post(
   '/',
   checkTokenUser,
-  authGuard(['admin']),
+  authGuard([1]),
   loanControllers.createLoan
 );
 
@@ -39,7 +39,7 @@ router.post(
 router.put(
   '/:id/return',
   checkTokenUser,
-  authGuard(['admin']),
+  authGuard([1]),
   loanControllers.returnLoan
 );
 
@@ -57,7 +57,7 @@ router.put(
 router.get(
   '/user/:userId',
   checkTokenUser,
-  authGuard(['admin', 'user']),
+  authGuard([1, 2]),
   loanControllers.getUserLoans
 );
 
@@ -71,7 +71,7 @@ router.get(
 router.get(
   '/active',
   checkTokenUser,
-  authGuard(['admin']),
+  authGuard([1]),
   loanControllers.getActiveLoans
 );
 
@@ -85,7 +85,7 @@ router.get(
 router.get(
   '/overdue',
   checkTokenUser,
-  authGuard(['admin']),
+  authGuard([1]),
   loanControllers.getOverdueLoans
 );
 

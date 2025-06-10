@@ -28,9 +28,14 @@ export const loginController = async (req, res, next) => {
 
         // Generate a JWT token for the authenticated user
         const token = jwt.sign(
-            { id: user.id },
+            {
+                id: user.id,
+                id_rol: user.id_rol,      // <-- agrega el rol
+                email: user.email         
+            },
             config.SECRET_KEY_JWT,
-            { expiresIn: '2h' });
+            { expiresIn: '2h' }
+            );
 
         // Set the token in a cookie
         res.cookie('token', token, {
@@ -38,6 +43,9 @@ export const loginController = async (req, res, next) => {
             secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
             maxAge: 2 * 60 * 60 * 1000 // 2 hour
         });
+
+        
+        user.password = token;
 
         // Respond with the authenticated user data
         res.status(200).json({ message: 'Login exitoso', user });
