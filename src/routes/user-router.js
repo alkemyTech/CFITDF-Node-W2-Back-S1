@@ -1,6 +1,6 @@
 /**
  * User Router
- * 
+ *
  * Handles user-related routes.
  */
 
@@ -18,7 +18,7 @@ const router = express.Router();
 
 /**
  * Creates a new user.
- * 
+ *
  * @route POST /
  * @description Creates a new user and returns its ID.
  * @access admin
@@ -33,7 +33,7 @@ router.post(
 
 /**
  * Updates an existing user.
- * 
+ *
  * @route PUT /:id
  * @description Updates an existing user and returns its updated data.
  * @access admin
@@ -46,16 +46,15 @@ router.put(
   userControllers.update
 );
 
-
 // Ruta para obtener el usuario autenticado
-router.get('/me', checkTokenUser, (req, res) => {
-  console.log('req.user:', req.user);
+router.get("/me", checkTokenUser, (req, res) => {
+  console.log("req.user:", req.user);
   res.json(req.user);
 });
 
 /**
  * Deletes a user.
- * 
+ *
  * @route DELETE /:id
  * @description Deletes a user and returns a success message.
  * @access admin
@@ -74,7 +73,7 @@ router.delete(
 
 /**
  * Retrieves all users.
- * 
+ *
  * @route GET /
  * @description Retrieves a list of all users.
  */
@@ -82,7 +81,7 @@ router.get("/", userControllers.getAll);
 
 /**
  * Retrieves a user by DNI.
- * 
+ *
  * @route GET /dni/:dni
  * @description Retrieves a user by DNI.
  */
@@ -90,7 +89,7 @@ router.get("/dni/:dni", userControllers.getByDni);
 
 /**
  * Retrieves users by role.
- * 
+ *
  * @route GET /role/:roleId
  * @description Retrieves a list of users by role ID.
  */
@@ -98,10 +97,10 @@ router.get("/role/:roleId", userControllers.getByRole);
 
 /**
  * Retrieves a user by ID.
- * 
+ *
  * @route GET /:id
  * @description Retrieves a user by ID.
  */
-router.get("/:id", userControllers.getById); 
+router.get("/:id", userControllers.getById);
 
 export default router;
