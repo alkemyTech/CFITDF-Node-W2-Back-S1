@@ -1,14 +1,40 @@
 paths:
-  /books:
+  /auth/login:
     post:
       tags:
-      - Books
-      summary: Crear un nuevo libro
+        - Auth
+      summary: Ingreso al sistema
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/parameters/schemas/BodyPost"
+              $ref: "#/components/parameters/schemas/AuthBodyPost"
+        required: true
+      responses:
+        200:
+          description: Login exitoso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Auth/Login"
+        401:
+          description: Login incorrecto
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Auth/ErrorPost"
+  /books:
+    post:
+      tags:
+        - Books
+      summary: Crear un nuevo libro
+      security:
+        - cookieAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/parameters/schemas/BookBodyPost"
         required: true
       responses:
         201:
@@ -22,100 +48,803 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schema/Books/ErrorPost"   
-  #   get:
-  #     tags:
-  #     - Books
-  #     summary: Obtener todos los libros
-  #     responses:
-  #       200:
-  #         description: Lista de libros obtenida exitosamente
-  #         content:
-  #           application/json:
-  #             schema:
-  #               $ref: "#/components/schema/Books/GetAllBooks"
-  #       404:
-  #         description: No se encontraron libros
-  #         content:
-  #           application/json:
-  #             schema:
-  #               $ref: "#/components/schema/Books/NotFound"     
-  # /books/{id}:
-  #   get:
-  #     tags:
-  #     - Books
-  #     summary: Obtener un libro por ID
-  #     parameters:
-  #       - name: id
-  #         in: path
-  #         required: true
-  #         description: ID del libro a obtener
-  #         schema:
-  #           type: integer
-  #     responses:
-  #       200:
-  #         description: Recurso obtenido exitosamente
-  #         content:
-  #           application/json:
-  #             schema:
-  #               $ref: "#/components/schema/Books/Book"
-  #       404:
-  #         description: Error al obtener el Recurso por ID
-  #         content:
-  #           application/json:
-  #             schema:
-  #               $ref: "#/components/schema/Books/ErrorGetById"               
-  #   put:
-  #     tags:
-  #     - Books
-  #     summary: Actualizar un libro por ID
-  #     parameters:
-  #       - name: id
-  #         in: path
-  #         required: true
-  #         description: ID del libro a actualizar
-  #         schema:
-  #           type: integer
-  #     requestBody:
-  #       content:
-  #         application/json:
-  #           schema:
-  #             $ref: "#/components/parameters/schemas/BodyPost"
-  #       required: true
-  #     responses:
-  #       200:
-  #         description: Libro actualizado exitosamente
-  #         content:
-  #           application/json:
-  #             schema:
-  #               $ref: "#/components/schema/Books/Book"
-  #       404:
-  #         description: Error al actualizar el libro por ID
-  #         content:
-  #           application/json:
-  #             schema:
-  #               $ref: "#/components/schema/Books/ErrorGetById"
-  #   delete:  
-  #     tags:
-  #     - Books
-  #     summary: Eliminar un libro por ID
-  #     parameters:
-  #       - name: id
-  #         in: path
-  #         required: true
-  #         description: ID del libro a eliminar
-  #         schema:
-  #           type: integer
-  #     responses:
-  #       200:
-  #         description: Libro eliminado exitosamente
-  #         content:
-  #           application/json:
-  #             schema:
-  #               $ref: "#/components/schema/Books/Book"
-  #       404:
-  #         description: Error al eliminar el libro por ID
-  #         content:
-  #           application/json:
-  #             schema:
-  #               $ref: "#/components/schema/Books/ErrorGetById"                 
+                $ref: "#/components/schema/Books/ErrorPost"
+    get:
+      tags:
+        - Books
+      summary: Obtener todos los libros
+      responses:
+        200:
+          description: Lista de libros obtenida exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Books/GetAllBooks"
+        404:
+          description: No se encontraron libros
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Books/NotFound"
+  /books/{id}:
+    get:
+      tags:
+        - Books
+      summary: Obtener un libro por ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID del libro a obtener
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Recurso obtenido exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Books/Book"
+        404:
+          description: Error al obtener el Recurso por ID
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Books/ErrorGetById"
+    put:
+      tags:
+        - Books
+      summary: Actualizar un libro por ID
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID del libro a actualizar
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/parameters/schemas/BookBodyPost"
+        required: true
+      responses:
+        200:
+          description: Libro actualizado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Books/Book"
+        404:
+          description: Error al actualizar el libro por ID
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Books/ErrorGetById"
+    delete:
+      tags:
+        - Books
+      summary: Eliminar un libro por ID
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID del libro a eliminar
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Libro eliminado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Books/Book"
+        404:
+          description: Error al eliminar el libro por ID
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Books/ErrorGetById"
+  /categories:
+    post:
+      tags:
+        - Categories
+      summary: Crear una nueva categoria
+      security:
+        - cookieAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/parameters/schemas/CategoryBodyPost"
+        required: true
+      responses:
+        201:
+          description: Categoria creada exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Categories/Category"
+        400:
+          description: Error al crear la categoria
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Categories/ErrorPost"
+    get:
+      tags:
+        - Categories
+      summary: Obtener todas las categorias
+      responses:
+        200:
+          description: Lista de categorias obtenida exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Categories/GetAll"
+        404:
+          description: No se encontraron categorias
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Categories/NotFound"
+  /categories/{id}:
+    get:
+      tags:
+        - Categories
+      summary: Obtener una categoria por ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID de la categoria a obtener
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Recurso obtenido exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Categories/Category"
+        404:
+          description: Error al obtener el Recurso por ID
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Categories/ErrorGetById"
+    put:
+      tags:
+        - Categories
+      summary: Actualizar un categoria por ID
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID de la categoria
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/parameters/schemas/CategoryBodyPost"
+        required: true
+      responses:
+        200:
+          description: Categoria actualizada exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Categories/Category"
+        404:
+          description: Error al actualizar la categoria
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Categories/ErrorGetById"
+    delete:
+      tags:
+        - Categories
+      summary: Eliminar categoria por ID
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID de la categoria a eliminar
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Categoria eliminada exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Categories/Category"
+        404:
+          description: Error al eliminar la categoria por ID
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Categories/ErrorGetById"
+  /roles:
+    post:
+      tags:
+        - Roles
+      summary: Crear un nuevo rol
+      security:
+        - cookieAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/parameters/schemas/RoleBodyPost"
+        required: true
+      responses:
+        201:
+          description: Rol creado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Roles/Role"
+        400:
+          description: Error al crear el role
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Roles/ErrorPost"
+    get:
+      tags:
+        - Roles
+      summary: Obtener todos los roles
+      responses:
+        200:
+          description: Lista de roles obtenida exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Roles/GetAll"
+        404:
+          description: No se encontraron roles
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Roles/NotFound"
+  /roles/{id}:
+    get:
+      tags:
+        - Roles
+      summary: Obtener un rol por ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID del rol a obtener
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Recurso obtenido exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Roles/Role"
+        404:
+          description: Error al obtener el Recurso por ID
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Roles/ErrorGetById"
+    put:
+      tags:
+        - Roles
+      summary: Actualizar un rol por ID
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID del rol
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/parameters/schemas/RoleBodyPost"
+        required: true
+      responses:
+        200:
+          description: Rol actualizada exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Roles/Role"
+        404:
+          description: Error al actualizar el rol
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Roles/ErrorGetById"
+    delete:
+      tags:
+        - Roles
+      summary: Eliminar rol por ID
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID del rol a eliminar
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Rol eliminado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Roles/Role"
+        404:
+          description: Error al eliminar el rol por ID
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Roles/ErrorGetById"
+  /copies:
+    post:
+      tags:
+        - Copies
+      summary: Crear una nuevo ejemplar
+      security:
+        - cookieAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/parameters/schemas/CopyBodyPost"
+        required: true
+      responses:
+        201:
+          description: Ejemplar creado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Copies/Copy"
+        400:
+          description: Error al crear el ejemplar
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Copies/ErrorPost"
+  /copies/{id}:
+    get:
+      tags:
+        - Copies
+      summary: Obtener un ejemplar por ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID del ejemplar a obtener
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Recurso obtenido exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Copies/Copy"
+        404:
+          description: Error al obtener el Recurso por ID
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Copies/ErrorGetById"
+    put:
+      tags:
+        - Copies
+      summary: Actualizar un ejemplar por ID
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID del ejemplar
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/parameters/schemas/CopyBodyPost"
+        required: true
+      responses:
+        200:
+          description: Ejemplar actualizado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Copies/Copy"
+        404:
+          description: Error al actualizar el ejemplar
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Copies/ErrorGetById"
+    delete:
+      tags:
+        - Copies
+      summary: Eliminar ejemplar por ID
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID del ejemplar a eliminar
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Ejemplar eliminado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Copies/Copy"
+        404:
+          description: Error al eliminar el ejemplar por ID
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Copies/ErrorGetById"
+  /copies/book/{bookId}:
+    get:
+      tags:
+        - Copies
+      summary: Obtener ejemplares por libro ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID del libro
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Lista de ejemplares obtenida exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Copies/GetAll"
+        404:
+          description: No se encontraron ejemplares
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Copies/NotFound"
+  /copies/available/{bookId}:
+    get:
+      tags:
+        - Copies
+      summary: Obtener ejemplares disponibles por libro ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID del libro
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Lista de ejemplares obtenida exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Copies/GetAll"
+        404:
+          description: No se encontraron ejemplares
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Copies/NotFound"
+  /users:
+    post:
+      tags:
+        - Users
+      summary: Crear un nuevo usuario
+      security:
+        - cookieAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/parameters/schemas/UserBodyPost"
+        required: true
+      responses:
+        201:
+          description: usuario creado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Users/User"
+        400:
+          description: Error al crear el usuario
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Users/ErrorPost"
+    get:
+      tags:
+        - Users
+      summary: Obtener todos los usuarios
+      responses:
+        200:
+          description: Lista de usuarios obtenida exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Users/GetAll"
+        404:
+          description: No se encontraron usuarios
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Users/NotFound"
+  /users/{id}:
+    get:
+      tags:
+        - Users
+      summary: Obtener un usuario por ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID del usuario a obtener
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Recurso obtenido exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Users/User"
+        404:
+          description: Error al obtener el Recurso por ID
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Users/ErrorGetById"
+    put:
+      tags:
+        - Users
+      summary: Actualizar un usuario por ID
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID del usuario a actualizar
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/parameters/schemas/UserBodyPost"
+        required: true
+      responses:
+        200:
+          description: usuario actualizado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Users/User"
+        404:
+          description: Error al actualizar el usuario por ID
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Users/ErrorGetById"
+    delete:
+      tags:
+        - Users
+      summary: Eliminar un usuario por ID
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID del usuario a eliminar
+          schema:
+            type: integer
+      responses:
+        200:
+          description: usuario eliminado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Users/User"
+        404:
+          description: Error al eliminar el usuario por ID
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Users/ErrorGetById"
+  /dni/{dni}:
+    get:
+      tags:
+        - Users
+      summary: Obtener un usuario por DNI
+      parameters:
+        - name: dni
+          in: path
+          required: true
+          description: DNI del usuario a obtener
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Recurso obtenido exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Users/User"
+        404:
+          description: Error al obtener el Recurso por ID
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Users/ErrorGetById"
+  /role/{roleId}:    
+    get:
+      tags:
+        - Users
+      summary: Obtener todos los usuarios para el rol
+      parameters:
+        - name: roleId
+          in: path
+          required: true
+          description: Role para filtrar los usuarios
+          schema:
+            type: integer      
+      responses:
+        200:
+          description: Lista de usuarios obtenida exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Users/GetAll"
+        404:
+          description: No se encontraron usuarios
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Users/NotFound"
+  /loans:
+    post:
+      tags:
+        - Loans
+      summary: Crear un nuevo prestamo
+      security:
+        - cookieAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/parameters/schemas/LoanBodyPost"
+        required: true
+      responses:
+        201:
+          description: prestamo creado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Loans/Loan"
+        400:
+          description: Error al crear el prestamo
+          content:
+            application/json:
+              schema:
+               $ref: "#/components/schema/Loans/ErrorPost"
+  /user/{userId}:
+    get:
+      tags:
+        - Loans
+      summary: Obtener todos los prestamos de un usuario
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID del usuario
+          schema:
+            type: integer	  
+      responses:
+        200:
+          description: Lista de prestamos obtenida exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Loans/GetAll"
+        404:
+          description: No se encontraron prestamos
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Loans/NotFound"
+  /active:
+    get:
+      tags:
+        - Loans
+      summary: Obtener todos los prestamos activos
+      responses:
+        200:
+          description: Lista de prestamos activos obtenida exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Loans/GetAll"
+        404:
+          description: No se encontraron prestamos
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Loans/NotFound"
+  /overdue:
+    get:
+      tags:
+        - Loans
+      summary: Obtener todos los prestamos no devueltos en fecha
+      responses:
+        200:
+          description: Lista de prestamos no devueltos en fecha obtenida exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Loans/GetAll"
+        404:
+          description: No se encontraron prestamos
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Loans/NotFound"				
+  /{id}/return:
+    put:
+      tags:
+        - Loans
+      summary: Devolver un libro prestado
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID del prestamo
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Devolucion exitosa
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Loans/Loan"
+        404:
+          description: Error al devoler
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Loans/ErrorGetById"
