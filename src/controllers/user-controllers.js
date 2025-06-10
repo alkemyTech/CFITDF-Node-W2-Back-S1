@@ -58,10 +58,11 @@ export class UserControllers {
                 data: newUser
             });
         } catch (error) {
+            console.error('Error al crear usuario:', error); // 
             next(new CustomError(
-                error.name === "SequelizeValidationError" 
-                    ? "Datos de usuario inválidos" 
-                    : errorMessages.ERROR_CREATE, 
+                error.name === "SequelizeValidationError"
+                ? "Datos de usuario inválidos"
+                : errorMessages.ERROR_CREATE,
                 400
             ));
         }

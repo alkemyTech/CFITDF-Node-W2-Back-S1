@@ -10,7 +10,7 @@ const router = express.Router();
 router.post(
   "/",
   checkTokenUser,
-  authGuard(["admin"]),
+  authGuard([1]),
   validateUserData,
   userControllers.create
 );
@@ -18,10 +18,16 @@ router.post(
 router.put(
   "/:id",
   checkTokenUser,
-  authGuard(["admin"]),
+  authGuard([1]),
   validateUserData,
   userControllers.update
 );
+
+// Ruta para obtener el usuario autenticado
+router.get('/me', checkTokenUser, (req, res) => {
+  console.log('req.user:', req.user);
+  res.json(req.user);
+});
 
 router.delete(
   "/:id",

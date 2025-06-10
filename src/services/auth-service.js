@@ -24,19 +24,18 @@ export class AuthService {
         // If the user is not found, throw an error
         throw new CustomError("User  not found", 404);
       }
-      let a = await bcrypt.hash(password, 10);
       // Compare the provided password with the stored hash
       const isValid = await bcrypt.compare(password, user.password);
       if (!isValid) {
         // If the password is invalid, throw an error
-        throw new CustomError("Invalid password " + a, 401);
+        throw new CustomError("Invalid password ", 401);
       }
 
       // Return the authenticated user
       return user;
     } catch (error) {
       // If any error occurs, rethrow it with a more informative message
-      throw new CustomError("Authentication failed", 401, error);
+      throw new CustomError("Authentication failed " + error,  401, error);
     }
   }
 }
